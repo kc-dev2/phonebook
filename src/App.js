@@ -10,8 +10,10 @@ const App = () => {
     event.preventDefault()
 
     const newPerson = {name: newName}
-
-    setPersons(persons.concat(newPerson))
+    if(persons.some(person => person.name === newPerson.name)) {
+      alert(`${newName} is already added to phonebook`)
+    }
+    else setPersons(persons.concat(newPerson))
   }
 
   const handleNameChange = (event) => {
@@ -31,7 +33,7 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      {persons.map(person => <div>{person.name}</div>)}
+      {persons.map(person => <div key={person.name}>{person.name}</div>)}
     </div>
   )
 }
