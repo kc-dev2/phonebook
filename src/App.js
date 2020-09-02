@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Filter from './components/Filter.js'
 
 const App = () => {
   const [ persons, setPersons ] = useState([
@@ -21,13 +22,6 @@ const App = () => {
     else setPersons(persons.concat(newPerson))
   }
 
-  const search = (event) => {
-    event.preventDefault()
-
-    var um=persons.filter(person => person.name.toLowerCase().includes(searchName.toLowerCase()))
-    console.log(um)
-  }
-
   const handleNameChange = (event) => {
     setNewName(event.target.value)
   }
@@ -44,11 +38,7 @@ const App = () => {
   return (
     <div>
       <div>debug: {newName}</div>
-      <form>
-        <div>
-          search: <input value={searchName} onChange={handleSearchNameChange} />
-        </div>
-      </form>
+      <Filter name={searchName} searchFn={handleSearchNameChange} />
       <h2>Search Results: </h2>
 
 
