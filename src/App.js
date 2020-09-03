@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from 'react'
 import Filter from './components/Filter.js'
-import axios from 'axios'
+import Person from './components/Person.js'
+// import axios from 'axios'
 import personService from './services/persons'
 
 const App = () => {
@@ -33,6 +34,16 @@ const App = () => {
           }
         )
     }
+  }
+
+  const deleteFromList = id => {
+    personService.erase(id)
+    .then(returnedPerson => {
+      setPersons(persons.filter(person => person.id !== id))   //this code handles front end!!
+    })
+    .catch(
+      console.log('already deleted this person')
+    )
   }
 
   const handleNameChange = (event) => {
@@ -68,7 +79,10 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      {persons.filter(person => person.name.toLowerCase().includes(searchName.toLowerCase())).map(person => <div key={person.name}>{person.name}: {person.number}</div>)}
+      {persons
+        .filter(person => person.name.toLowerCase()
+          .includes(searchName.toLowerCase()))
+        .map(person => <Person key={person.name} name={person.name} number={person.number} deletePerson={()=>deleteFromList(person.id)} />)}
     </div>
   )
 }
